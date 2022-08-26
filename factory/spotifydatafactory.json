@@ -1,0 +1,9 @@
+{
+	"name": "spotifydatafactory",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1322b963-b58d-4afb-b922-7d6aace079df",
+		"tenantId": "0f90932f-c81d-4ee7-91c5-26138d1194e9"
+	}
+}
