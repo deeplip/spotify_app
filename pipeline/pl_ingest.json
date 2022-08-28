@@ -5,7 +5,14 @@
 			{
 				"name": "first_ingest",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -31,11 +38,24 @@
 					"referenceName": "first_ingest",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "playlist",
+					"value": "37i9dQZF1DX4UtSsGT1Sbe"
+				}
 			}
 		],
-		"parameters": {
+		"variables": {
+			"playlist_world": {
+				"type": "Array"
+			},
 			"playlist": {
-				"type": "string"
+				"type": "String"
 			}
 		},
 		"annotations": []
