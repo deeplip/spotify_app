@@ -1,0 +1,11 @@
+{
+	"name": "pl_ingest",
+	"properties": {
+		"parameters": {
+			"playlist_id": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
