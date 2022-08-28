@@ -34,7 +34,7 @@
 			}
 		],
 		"parameters": {
-			"playlist_id": {
+			"playlist": {
 				"type": "string"
 			}
 		},
