@@ -23,9 +23,6 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Repos/deeplip/spotify_app/first_ingest",
-					"baseParameters": {
-						"playlist": "37i9dQZF1DXcBWIGoYBM5M"
-					},
 					"libraries": [
 						{
 							"pypi": {
