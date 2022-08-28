@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Global exists",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -15,6 +15,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@activity('Global exists').output",
+						"type": "Expression"
+					},
 					"ifFalseActivities": [
 						{
 							"name": "first_ingest",
@@ -46,11 +50,42 @@
 								"type": "LinkedServiceReference"
 							}
 						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Get Metadata1_copy1",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "Binary1",
+									"type": "DatasetReference"
+								},
+								"fieldList": [
+									"exists"
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							}
+						}
 					]
 				}
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "Global exists",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
