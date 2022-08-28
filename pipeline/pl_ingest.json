@@ -7,7 +7,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "All out 80s",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -37,7 +37,7 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "All out 80s",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"userProperties": [],
