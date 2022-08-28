@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@activity('Global exists').output",
+						"value": "@activity('Global exists').output.exists",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
