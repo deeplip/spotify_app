@@ -5,14 +5,7 @@
 			{
 				"name": "first_ingest",
 				"type": "DatabricksNotebook",
-				"dependsOn": [
-					{
-						"activity": "All out 80s",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -23,6 +16,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Repos/deeplip/spotify_app/first_ingest",
+					"baseParameters": {
+						"playlist": "37i9dQZF1DXcBWIGoYBM5M"
+					},
 					"libraries": [
 						{
 							"pypi": {
@@ -34,16 +30,6 @@
 				"linkedServiceName": {
 					"referenceName": "first_ingest",
 					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "All out 80s",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "playlist",
-					"value": "37i9dQZF1DX4UtSsGT1Sbe"
 				}
 			}
 		],
