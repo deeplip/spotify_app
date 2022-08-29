@@ -46,7 +46,26 @@
 								]
 							},
 							"linkedServiceName": {
-								"referenceName": "first_ingest",
+								"referenceName": "ingest",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "next_ingests",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "ingest",
 								"type": "LinkedServiceReference"
 							}
 						}
@@ -75,11 +94,39 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
 						"type": "BinaryReadSettings"
 					}
+				}
+			},
+			{
+				"name": "Transform",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/deeplip/spotify_app/transform"
+				},
+				"linkedServiceName": {
+					"referenceName": "ingest",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
