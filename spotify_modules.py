@@ -4,12 +4,13 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 
 class Auth:
-    def __init__(self):
-        self.secrets = self.get_secrets()
-        self.__id = self.secrets[0]
-        self.__secret = self.secrets[1]
-        self.__credentials = SpotifyClientCredentials(
-            client_id=self.__id, client_secret=self.__secret)
+    def __init__(self, credentials):
+        self.__credentials = credentials
+#        self.secrets = self.get_secrets()
+#        self.__id = self.secrets[0]
+#        self.__secret = self.secrets[1]
+#        self.__credentials = SpotifyClientCredentials(
+#            client_id=self.__id, client_secret=self.__secret)
         self.spotify = spotipy.Spotify(auth_manager=self.__credentials)
 
     def get_secrets(self):
@@ -20,9 +21,8 @@ class Auth:
 
 
 class Playlist(Auth):
-    def __init__(self, playlist_id):
-        super().__init__()
-        print(self.secrets[0])
+    def __init__(self, credentials, playlist_id):
+        super().__init__(credentials)
         self.playlist_id = playlist_id
         self.track_objects = self.spotify.playlist(self.playlist_id)[
             'tracks']['items']
@@ -60,28 +60,26 @@ class Playlist(Auth):
         return playlist_df
 
     def get_audio_data(self, playlist_df = None):
-        if playlist_df is not None:
+        if playlist_df is None:
             playlist_df = self.get_df()
-        tracks_data = playlist_df['track_id'].map(Track)
+        audio_analysis, audio_features = playlist_df['track_id'].map(self.track_audio_data)
+        print(audio_analysis)
         common_cols = ['key', 'tempo', 'loudness', 'mode', 'time_signature']
-        audio_analysis_df = pd.DataFrame([track.audio_analysis for track in tracks_data]).drop(common_cols, axis = 1)
-        audio_features_df = pd.DataFrame([track.audio_features for track in tracks_data])
+        audio_analysis_df = pd.DataFrame([track for track in audio_analysis]).drop(common_cols, axis = 1)
+        audio_features_df = pd.DataFrame([track for track in audio_features])
         audio_df = pd.concat([audio_features_df, audio_analysis_df], axis = 1)
         data_df = pd.merge(playlist_df, audio_df, left_on='track_id', right_on='id')
         return data_df
         
-class Track(Auth):
-    def __init__(self, track_id):
-        super().__init__()
-        self.track_id = track_id
-        self.track_object = self.spotify.track(self.track_id)
-        self.audio_features = self.spotify.audio_features(self.track_id)[0]
-        self.audio_analysis = self.spotify.audio_analysis(self.track_id)[
-            'track']
-
+    def track_audio_data(self, track_id):
+        track_object = self.spotify.track(track_id)
+        audio_features = self.spotify.audio_features(track_id)[0]
+        audio_analysis = self.spotify.audio_analysis(track_id)['track']
+        return audio_analysis, audio_features
+    
 class Album(Auth):
-    def __init__(self, album_id):
-        super().__init__()
+    def __init__(self, credentials, album_id):
+        super().__init__(credentials)
         self.album_id = album_id
         self.data = self.spotify.album(self.album_id)
 
