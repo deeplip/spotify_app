@@ -1,18 +1,23 @@
 # Databricks notebook source
+# Databricks notebook source
 import spotify_modules
 import pandas as pd
 
-playlist = '37i9dQZF1DXcBWIGoYBM5M' # PARAM
+dbutils.widgets.text("playlist", "","")
+playlist = dbutils.widgets.get("playlist")
 
-def get_playlist(playlist_id):
-    playlist_obj = spotify_modules.Playlist(playlist)
-    playlist_df = pd.DataFrame({'track_id':playlist_obj.track_id,'artist_name' : playlist_obj.artists_names,'track_name' : playlist_obj.tracks_names, 'popularity':playlist_obj.popularity, 'artist_id' : playlist_obj.artists_ids,  'album_id' : playlist_obj.album_id})
-    return playlist_df
+# playlist = '37i9dQZF1DXcBWIGoYBM5M' # PARAM
 
-def get_audio_data(playlist_df):
-    tracks_data = playlist_df['track_id'].map(spotify_modules.Track)
-    audio_analysis_df = pd.DataFrame([track.audio_analysis for track in tracks_data])
-    audio_features_df = pd.DataFrame([track.audio_features for track in tracks_data])
-    audio_df = pd.concat([audio_features_df, audio_analysis_df], axis = 1)
-    data_df = pd.merge(playlist_df, audio_df, left_on='track_id', right_on='id')
-    return data_df
+playlist_df = spotify_modules.Playlist(playlist).get_df()
+audio_df = get_audio_data(playlist_df)
+spark_df_audio_data = spark.createDataFrame(audio_df)
+
+# COMMAND ----------
+
+container_name = 'bronze'
+file_name = 'top_world'
+storage_name = 'spotify0storage'
+path = f"abfss://{container_name}@{storage_name}.dfs.core.windows.net/{file_name}"
+
+spark_conf_set(storage_name)
+spark_df_audio_data.write.format('delta').save(path)
