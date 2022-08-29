@@ -15,6 +15,7 @@ playlist = '37i9dQZF1DXcBWIGoYBM5M' # PARAM
 
 playlist_obj = spotify_modules.Playlist(credentials, playlist)
 audio_df = playlist_obj.get_audio_data()
+print(audio_df.info())
 spark_df_audio_data = spark.createDataFrame(audio_df)
 
 # COMMAND ----------

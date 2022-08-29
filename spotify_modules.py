@@ -6,19 +6,7 @@ import pandas as pd
 class Auth:
     def __init__(self, credentials):
         self.__credentials = credentials
-#        self.secrets = self.get_secrets()
-#        self.__id = self.secrets[0]
-#        self.__secret = self.secrets[1]
-#        self.__credentials = SpotifyClientCredentials(
-#            client_id=self.__id, client_secret=self.__secret)
         self.spotify = spotipy.Spotify(auth_manager=self.__credentials)
-
-    def get_secrets(self):
-        with open("secrets.txt", "r") as txt_file:
-            secrets = txt_file.readlines()[0]
-            secrets = secrets.split(',')
-            return secrets
-
 
 class Playlist(Auth):
     def __init__(self, credentials, playlist_id):
@@ -62,8 +50,8 @@ class Playlist(Auth):
     def get_audio_data(self, playlist_df = None):
         if playlist_df is None:
             playlist_df = self.get_df()
-        audio_analysis, audio_features = playlist_df['track_id'].map(self.track_audio_data)
-        print(audio_analysis)
+        audio_analysis = playlist_df['track_id'].map(self.track_audio_analysis)
+        audio_features = playlist_df['track_id'].map(self.track_audio_features)
         common_cols = ['key', 'tempo', 'loudness', 'mode', 'time_signature']
         audio_analysis_df = pd.DataFrame([track for track in audio_analysis]).drop(common_cols, axis = 1)
         audio_features_df = pd.DataFrame([track for track in audio_features])
@@ -71,11 +59,15 @@ class Playlist(Auth):
         data_df = pd.merge(playlist_df, audio_df, left_on='track_id', right_on='id')
         return data_df
         
-    def track_audio_data(self, track_id):
+    def track_audio_analysis(self, track_id):
+        track_object = self.spotify.track(track_id)
+        audio_analysis = self.spotify.audio_analysis(track_id)['track']
+        return audio_analysis
+
+    def track_audio_features(self, track_id):
         track_object = self.spotify.track(track_id)
         audio_features = self.spotify.audio_features(track_id)[0]
-        audio_analysis = self.spotify.audio_analysis(track_id)['track']
-        return audio_analysis, audio_features
+        return audio_features
     
 class Album(Auth):
     def __init__(self, credentials, album_id):
