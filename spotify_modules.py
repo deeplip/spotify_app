@@ -12,8 +12,9 @@ class Playlist(Auth):
     def __init__(self, credentials, playlist_id):
         super().__init__(credentials)
         self.playlist_id = playlist_id
-        self.track_objects = self.spotify.playlist(self.playlist_id)[
-            'tracks']['items']
+        self.playlist_obj = self.spotify.playlist(self.playlist_id)
+        self.playlist_name = self.playlist_obj['name'].replace("'", "").replace(" ", "")
+        self.track_objects = self.playlist_obj['tracks']['items']
         self.track_items = [item['track'] for item in self.track_objects]
         self.artists_objects = [item['artists'] for item in self.track_items]
 
@@ -74,7 +75,6 @@ class Album(Auth):
         super().__init__(credentials)
         self.album_id = album_id
         self.data = self.spotify.album(self.album_id)
-
 
 # class Artist(Auth):
 #     def __init__(self, artist_id):
