@@ -131,7 +131,14 @@
 					"notebookPath": "/Repos/deeplip/spotify_app/transform",
 					"baseParameters": {
 						"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
-					}
+					},
+					"libraries": [
+						{
+							"pypi": {
+								"package": "spotipy"
+							}
+						}
+					]
 				},
 				"linkedServiceName": {
 					"referenceName": "ingest",
