@@ -35,7 +35,7 @@
 							"typeProperties": {
 								"notebookPath": "/Repos/deeplip/spotify_app/first_ingest",
 								"baseParameters": {
-									"playlist": "37i9dQZF1DXcBWIGoYBM5M"
+									"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
 								},
 								"libraries": [
 									{
@@ -65,7 +65,10 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"notebookPath": "/Repos/deeplip/spotify_app/next_ingests"
+								"notebookPath": "/Repos/deeplip/spotify_app/next_ingests",
+								"baseParameters": {
+									"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
+								}
 							},
 							"linkedServiceName": {
 								"referenceName": "ingest",
@@ -125,7 +128,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/deeplip/spotify_app/transform"
+					"notebookPath": "/Repos/deeplip/spotify_app/transform",
+					"baseParameters": {
+						"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ingest",
