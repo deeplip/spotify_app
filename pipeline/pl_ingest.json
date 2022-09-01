@@ -92,7 +92,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "Binary1",
+						"referenceName": "Global50",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -102,9 +102,6 @@
 						"type": "AzureBlobFSReadSettings",
 						"recursive": true,
 						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "BinaryReadSettings"
 					}
 				}
 			},
