@@ -1,0 +1,20 @@
+{
+	"name": "Global50",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_spotify",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Top50-Global",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
