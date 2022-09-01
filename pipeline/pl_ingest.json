@@ -64,6 +64,9 @@
 								"secureInput": false
 							},
 							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Repos/deeplip/spotify_app/next_ingests"
+							},
 							"linkedServiceName": {
 								"referenceName": "ingest",
 								"type": "LinkedServiceReference"
