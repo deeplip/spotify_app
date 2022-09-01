@@ -148,6 +148,43 @@
 					"referenceName": "ingest",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "tables_generator",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Transform",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/deeplip/spotify_app/tables_generator",
+					"baseParameters": {
+						"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
+					},
+					"libraries": [
+						{
+							"pypi": {
+								"package": "spotipy"
+							}
+						}
+					]
+				},
+				"linkedServiceName": {
+					"referenceName": "ingest",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"variables": {
