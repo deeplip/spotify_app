@@ -214,17 +214,6 @@
 				}
 			}
 		],
-		"variables": {
-			"playlist_world": {
-				"type": "Array"
-			},
-			"playlist": {
-				"type": "String"
-			},
-			"first_ingest": {
-				"type": "Boolean"
-			}
-		},
 		"annotations": []
 	}
 }
