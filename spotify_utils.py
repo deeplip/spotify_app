@@ -1,0 +1,15 @@
+# Databricks notebook source
+import spotify_modules
+from spotipy.oauth2 import SpotifyClientCredentials
+
+class Credentials:
+    def __init__(self):
+        self.client_id = dbutils.secrets.get(scope = 'SpotifyClientID', key = 'SpotifyClientID')
+        self.key = dbutils.secrets.get(scope = 'SpotifySecretKey', key = 'SpotifySecretKey')
+        self.credentials = SpotifyClientCredentials(client_id= self.client_id, client_secret=self.key)
+        
+class Routing:
+    def __init__(self, container_name, file_name):
+        self.container_name = container_name
+        self.file_name = file_name
+        self.path = f"abfss://{self.container_name}@spotify0storage.dfs.core.windows.net/{self.file_name}"

@@ -1,19 +1,21 @@
 # Databricks notebook source
+# MAGIC %run ../spotify_app/spotify_utils
+
+# COMMAND ----------
+
 import spotify_modules
-from spotipy.oauth2 import SpotifyClientCredentials
 
-client_id = dbutils.secrets.get(scope = 'SpotifyClientID', key = 'SpotifyClientID')
-key = dbutils.secrets.get(scope = 'SpotifySecretKey', key = 'SpotifySecretKey')
-credentials = SpotifyClientCredentials(client_id=client_id, client_secret=key)
+dbutils.widgets.text("playlist_id", "","")
+playlist_id = dbutils.widgets.get("playlist_id")
+# playlist_id = '37i9dQZEVXbMDoHDwVN2tF'
 
-# dbutils.widgets.text("playlist", "","")
-# playlist = dbutils.widgets.get("playlist")
+credentials= Credentials().credentials
+todays_playlist_obj = spotify_modules.Playlist(credentials, playlist_id)
+playlist_name = todays_playlist_obj.playlist_name
+path = Routing('bronze', playlist_name).path
 
-playlist = '37i9dQZF1DXcBWIGoYBM5M' # PARAM
-path = f"abfss://{container_name}@{storage_name}.dfs.core.windows.net/{file_name}"
-
-def get_todays_playlist():
-    playlist_df = spotify_modules.Playlist(credentials, playlist).get_df()
+def get_todays_playlist(playlist_obj):
+    playlist_df = playlist_obj.get_df()
     return spark.createDataFrame(playlist_df)
 
 def get_existing_playlist(path):
@@ -22,20 +24,31 @@ def get_existing_playlist(path):
     storage_name = 'spotify0storage'
     return spark.read.format('delta').load(path)
 
-todays_playlist = get_todays_playlist()
+todays_playlist = get_todays_playlist(todays_playlist_obj)
 existing_playlist = get_existing_playlist(path)
 
 existing_tracks = existing_playlist.select('track_id')
 todays_tracks = todays_playlist.select('track_id')
-new_tracks = existing_tracks.subtract(todays_tracks) # For check when playlist change!
+new_tracks = todays_tracks.subtract(existing_tracks) # For check when playlist change!
 new_tracks_exists = new_tracks.count() > 0
 
 # COMMAND ----------
 
+def concat_track_artist(df):
+    return (df
+         .withColumn('artist_track_concat', F.col('artist_name')
+                     .getItem(0))
+         .withColumn('artist_track_concat', F.concat_ws(' ', F.col('artist_track_concat'), F.col('track_name')))
+    )
+    
 if new_tracks_exists:
+    from pyspark.sql import functions as F
     new_tracks_list = new_tracks.select('track_id').rdd.flatMap(lambda x: x).collect()
-#     new_tracks_list = ['3uUuGVFu1V7jTQL60S1r8z', '2pIUpMhHL6L9Z5lnKxJJr9', '0T5iIrXA4p5GsubkhuBIKV']
     playlist_from_new_tracks = todays_playlist.where(F.col('track_id').isin(new_tracks_list))
-    audio_data_from_new_tracks = spotify_modules.Playlist(credentials, playlist).get_audio_data(playlist_from_new_tracks.select('*').toPandas())
+    playlist_from_new_tracks = concat_track_artist(playlist_from_new_tracks)
+    existing_artist_track_concat_ls = concat_track_artist(existing_playlist).select('artist_track_concat').rdd.flatMap(lambda x: x).collect()
+    playlist_from_new_tracks = playlist_from_new_tracks.where(~F.col('artist_track_concat').isin(existing_artist_track_concat_ls)).drop('artist_track_concat')
+    audio_data_from_new_tracks = spotify_modules.Playlist(credentials, playlist_id).get_audio_data(playlist_from_new_tracks.select('*').toPandas())
     playlist_from_new_tracks.write.mode('append').format('delta').save(path) #When it differs, try to append to delta.
     playlist_from_new_tracks.display()
+
