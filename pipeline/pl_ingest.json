@@ -133,12 +133,6 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Repos/deeplip/spotify_app/transform",
-					"baseParameters": {
-						"playlist_id": {
-							"value": "getParams.output",
-							"type": "Expression"
-						}
-					},
 					"libraries": [
 						{
 							"pypi": {
