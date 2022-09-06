@@ -17,7 +17,14 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "selectPlaylistID"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
 			"scriptLines": [
 				"parameters{",
 				"     parameter1 as string",
@@ -30,7 +37,13 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine') ~> params",
-				"params sink(validateSchema: false,",
+				"params select(mapColumn(",
+				"          playlist_id",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectPlaylistID",
+				"selectPlaylistID aggregate(groupBy(playlist_id)) ~> aggregate1",
+				"aggregate1 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     keys:['playlist_id'],",

@@ -215,6 +215,12 @@
 					"referenceName": "ingest",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": []
 			}
 		],
 		"annotations": []
