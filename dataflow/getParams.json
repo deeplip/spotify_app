@@ -23,9 +23,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     parameter1 as string",
-				"}",
 				"source(output(",
 				"          playlist_id as string,",
 				"          playlist_name as string",
