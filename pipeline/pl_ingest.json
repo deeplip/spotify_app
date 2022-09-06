@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "If Condition1",
+				"name": "If data exists",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
@@ -117,7 +117,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "If Condition1",
+						"activity": "If data exists",
 						"dependencyConditions": [
 							"Succeeded"
 						]
