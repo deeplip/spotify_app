@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "spotifydatafactory"
+		},
+		"ADLS_spotify_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_spotify'"
+		},
+		"ingest_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ingest'"
+		},
+		"spotify_blob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'spotify_blob'"
+		},
+		"ADLS_spotify_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://spotify0storage.dfs.core.windows.net/"
+		},
+		"on_config_runs_appear_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/4522d4bf-e71e-4336-86b4-d2c35cdae500/resourceGroups/Spotify/providers/Microsoft.Storage/storageAccounts/spotify0storage"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "spotifydatafactory_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLS_spotify_accountKey": {
+						"value": "[parameters('ADLS_spotify_accountKey')]"
+					},
+					"ingest_accessToken": {
+						"value": "[parameters('ingest_accessToken')]"
+					},
+					"spotify_blob_connectionString": {
+						"value": "[parameters('spotify_blob_connectionString')]"
+					},
+					"ADLS_spotify_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_spotify_properties_typeProperties_url')]"
+					},
+					"on_config_runs_appear_properties_typeProperties_scope": {
+						"value": "[parameters('on_config_runs_appear_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

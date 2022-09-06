@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "spotifydatafactory"
+		},
+		"ADLS_spotify_accountKey": {
+			"value": ""
+		},
+		"ingest_accessToken": {
+			"value": ""
+		},
+		"spotify_blob_connectionString": {
+			"value": ""
+		},
+		"ADLS_spotify_properties_typeProperties_url": {
+			"value": "https://spotify0storage.dfs.core.windows.net/"
+		},
+		"on_config_runs_appear_properties_typeProperties_scope": {
+			"value": "/subscriptions/4522d4bf-e71e-4336-86b4-d2c35cdae500/resourceGroups/Spotify/providers/Microsoft.Storage/storageAccounts/spotify0storage"
+		}
+	}
+}
