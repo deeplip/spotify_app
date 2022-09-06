@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "getParams",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -25,8 +25,26 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "playlist_id",
+					"value": {
+						"value": "@string('getParams')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"playlist_id": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
