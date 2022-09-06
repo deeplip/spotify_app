@@ -20,9 +20,6 @@
 			"transformations": [
 				{
 					"name": "selectPlaylistID"
-				},
-				{
-					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -42,8 +39,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectPlaylistID",
-				"selectPlaylistID aggregate(groupBy(playlist_id)) ~> aggregate1",
-				"aggregate1 sink(validateSchema: false,",
+				"selectPlaylistID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     keys:['playlist_id'],",
