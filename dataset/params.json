@@ -1,0 +1,29 @@
+{
+	"name": "params",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_spotify",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "runs",
+				"fileSystem": "params"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"playlist_id": {
+					"type": "string"
+				},
+				"playlist_name": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

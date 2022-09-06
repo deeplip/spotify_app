@@ -134,7 +134,10 @@
 				"typeProperties": {
 					"notebookPath": "/Repos/deeplip/spotify_app/transform",
 					"baseParameters": {
-						"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
+						"playlist_id": {
+							"value": "getParams()",
+							"type": "Expression"
+						}
 					},
 					"libraries": [
 						{
