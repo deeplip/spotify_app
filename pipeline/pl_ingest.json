@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Set variable2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -256,43 +256,6 @@
 				}
 			},
 			{
-				"name": "LookForPlaylistFolder",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "setPlaylistName",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "ParquetSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"fileListPath": {
-								"value": "@concat('bronze/', variables('playlist_name'))",
-								"type": "Expression"
-							},
-							"enablePartitionDiscovery": false
-						}
-					},
-					"dataset": {
-						"referenceName": "bronzeData",
-						"type": "DatasetReference"
-					}
-				}
-			},
-			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
 				"dependsOn": [
@@ -326,7 +289,7 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "Set variable2",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -338,9 +301,9 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "playlists_folders_ls",
+					"variableName": "ifa",
 					"value": {
-						"value": "@intersection(\n    activity('Get Metadata1').output.childItems,\n        array(variables('playlist_name'))\n        )",
+						"value": "@equals(1,\n    length(\n        intersection(\n            array(variables('playlist_name')), \n                array(activity('Get Metadata1').output.childItems[0]['name'])\n            )\n    )\n)",
 						"type": "Expression"
 					}
 				}
