@@ -7,16 +7,16 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Global exists",
+						"activity": "LookForPlaylistFolder",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@activity('Global exists').output.exists",
+						"value": "@activity('LookForPlaylistFolder').output.count",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -88,20 +88,7 @@
 			{
 				"name": "Global exists",
 				"type": "GetMetadata",
-				"dependsOn": [
-					{
-						"activity": "setPlaylistId",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "setPlaylistName",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -224,7 +211,7 @@
 				}
 			},
 			{
-				"name": "getPlaylistParams",
+				"name": "LookForParams",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -260,7 +247,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "getPlaylistParams",
+						"activity": "LookForParams",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -270,7 +257,7 @@
 				"typeProperties": {
 					"variableName": "playlist_id",
 					"value": {
-						"value": "@activity('getPlaylistParams').output.firstRow['playlist_id']",
+						"value": "@activity('LookForParams').output.firstRow['playlist_id']",
 						"type": "Expression"
 					}
 				}
@@ -280,7 +267,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "getPlaylistParams",
+						"activity": "LookForParams",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -290,8 +277,47 @@
 				"typeProperties": {
 					"variableName": "playlist_name",
 					"value": {
-						"value": "@activity('getPlaylistParams').output.firstRow['playlist_name']",
+						"value": "@activity('LookForParams').output.firstRow['playlist_name']",
 						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "LookForPlaylistFolder",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "setPlaylistName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "variables('playlist_name')",
+								"type": "Expression"
+							},
+							"wildcardFileName": "*.parquet",
+							"enablePartitionDiscovery": false
+						}
+					},
+					"dataset": {
+						"referenceName": "bronzeData",
+						"type": "DatasetReference"
 					}
 				}
 			}
