@@ -296,6 +296,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"playlist_id": {
+				"type": "string"
+			},
+			"playlist_name": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"playlist_id": {
 				"type": "String"
