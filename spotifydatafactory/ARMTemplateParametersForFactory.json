@@ -19,6 +19,9 @@
 		},
 		"on_config_runs_appear_properties_typeProperties_scope": {
 			"value": "/subscriptions/4522d4bf-e71e-4336-86b4-d2c35cdae500/resourceGroups/Spotify/providers/Microsoft.Storage/storageAccounts/spotify0storage"
+		},
+		"blob_trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/4522d4bf-e71e-4336-86b4-d2c35cdae500/resourceGroups/Spotify/providers/Microsoft.Storage/storageAccounts/spotify0blob"
 		}
 	}
 }
