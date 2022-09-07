@@ -7,16 +7,16 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "LookForPlaylistFolder",
+						"activity": "Get Metadata1",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@activity('LookForPlaylistFolder').output.count",
+						"value": "@contains(activity('Get Metadata1').output.childItems,\n    variables('playlist_name'))\n",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -83,33 +83,6 @@
 							}
 						}
 					]
-				}
-			},
-			{
-				"name": "Global exists",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "bronzeData",
-						"type": "DatasetReference"
-					},
-					"fieldList": [
-						"exists"
-					],
-					"storeSettings": {
-						"type": "AzureBlobFSReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					}
 				}
 			},
 			{
@@ -306,18 +279,49 @@
 						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": {
-								"value": "@variables('playlist_name')",
+							"fileListPath": {
+								"value": "@concat('bronze/', variables('playlist_name'))",
 								"type": "Expression"
 							},
-							"wildcardFileName": "*.*",
 							"enablePartitionDiscovery": false
 						}
 					},
 					"dataset": {
 						"referenceName": "bronzeData",
 						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "setPlaylistName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "bronzeData",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
 					}
 				}
 			}
