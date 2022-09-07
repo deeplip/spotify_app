@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "get_playlist_exists",
+						"activity": "getPlaylistExists",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -290,7 +290,7 @@
 				}
 			},
 			{
-				"name": "get_playlist_exists",
+				"name": "getPlaylistExists",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
