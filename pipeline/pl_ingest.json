@@ -324,6 +324,26 @@
 						"enablePartitionDiscovery": false
 					}
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "playlists_folders_ls",
+					"value": {
+						"value": "@intersection(activity('Get Metadata1').output.childItems, array(variables('playlist_name')))",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -340,6 +360,15 @@
 			},
 			"playlist_name": {
 				"type": "String"
+			},
+			"if": {
+				"type": "String"
+			},
+			"ifa": {
+				"type": "Boolean"
+			},
+			"playlists_folders_ls": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
