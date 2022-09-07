@@ -306,12 +306,10 @@
 						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": {
-								"value": "variables('playlist_name')",
+							"fileListPath": {
+								"value": "@concat('bronze/', variables('playlist_name'))",
 								"type": "Expression"
 							},
-							"wildcardFileName": "*.parquet",
 							"enablePartitionDiscovery": false
 						}
 					},
