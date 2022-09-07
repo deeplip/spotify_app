@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@contains(activity('Get Metadata1').output.childItems,\n    variables('playlist_name'))\n",
+						"value": "@variables('playlist_exists')",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -256,7 +256,7 @@
 				}
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "getPlaylistName",
 				"type": "GetMetadata",
 				"dependsOn": [
 					{
@@ -293,7 +293,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "getPlaylistName",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -301,9 +301,9 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "ifa",
+					"variableName": "playlist_exists",
 					"value": {
-						"value": "@equals(1,\n    length(\n        intersection(\n            array(variables('playlist_name')), \n                array(activity('Get Metadata1').output.childItems[0]['name'])\n            )\n    )\n)",
+						"value": "@equals(1,\n    length(\n        intersection(\n            array(variables('playlist_name')), \n                array(activity('getPlaylistName').output.childItems[0]['name'])\n            )\n    )\n)",
 						"type": "Expression"
 					}
 				}
@@ -332,6 +332,9 @@
 			},
 			"playlists_folders_ls": {
 				"type": "Array"
+			},
+			"playlist_exists": {
+				"type": "Boolean"
 			}
 		},
 		"annotations": []
