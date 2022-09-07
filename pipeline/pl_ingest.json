@@ -288,7 +288,7 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "playlist_id",
+					"variableName": "playlist_name",
 					"value": {
 						"value": "@activity('getPlaylistParams').output.firstRow['playlist_name']",
 						"type": "Expression"
