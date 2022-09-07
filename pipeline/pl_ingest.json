@@ -112,7 +112,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "Global50",
+						"referenceName": "bronzeData",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
