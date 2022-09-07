@@ -340,7 +340,7 @@
 				"typeProperties": {
 					"variableName": "playlists_folders_ls",
 					"value": {
-						"value": "@intersection(activity('Get Metadata1').output.childItems, array(variables('playlist_name')))",
+						"value": "@intersection(\n    activity('Get Metadata1').output.childItems,\n        array(variables('playlist_name'))\n        )",
 						"type": "Expression"
 					}
 				}
