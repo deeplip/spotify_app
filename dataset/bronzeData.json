@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": {
-					"value": "playlist_name",
+					"value": "playlist_name.value",
 					"type": "Expression"
 				},
 				"fileSystem": "bronze"

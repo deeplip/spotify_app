@@ -299,6 +299,9 @@
 		"variables": {
 			"playlist_id": {
 				"type": "String"
+			},
+			"playlist_name": {
+				"type": "String"
 			}
 		},
 		"annotations": []
