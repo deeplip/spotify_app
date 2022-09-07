@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Set variable2",
+						"activity": "get_playlist_exists",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -256,7 +256,7 @@
 				}
 			},
 			{
-				"name": "getPlaylistName",
+				"name": "getPlaylistsOnStorage",
 				"type": "GetMetadata",
 				"dependsOn": [
 					{
@@ -284,16 +284,17 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					}
 				}
 			},
 			{
-				"name": "Set variable2",
+				"name": "get_playlist_exists",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "getPlaylistName",
+						"activity": "getPlaylistsOnStorage",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -303,7 +304,7 @@
 				"typeProperties": {
 					"variableName": "playlist_exists",
 					"value": {
-						"value": "@equals(1,\n    length(\n        intersection(\n            array(variables('playlist_name')), \n                array(activity('getPlaylistName').output.childItems[0]['name'])\n            )\n    )\n)",
+						"value": "@equals(1,\n    length(\n        intersection(\n            array(variables('playlist_name')), \n                array(activity('getPlaylistsOnStorage').output.childItems[0]['name'])\n            )\n    )\n)",
 						"type": "Expression"
 					}
 				}
