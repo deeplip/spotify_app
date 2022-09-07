@@ -23,10 +23,6 @@
 			"type": "string",
 			"defaultValue": "https://spotify0storage.dfs.core.windows.net/"
 		},
-		"on_config_runs_appear_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/4522d4bf-e71e-4336-86b4-d2c35cdae500/resourceGroups/Spotify/providers/Microsoft.Storage/storageAccounts/spotify0storage"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -65,9 +61,6 @@
 					},
 					"ADLS_spotify_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_spotify_properties_typeProperties_url')]"
-					},
-					"on_config_runs_appear_properties_typeProperties_scope": {
-						"value": "[parameters('on_config_runs_appear_properties_typeProperties_scope')]"
 					}
 				}
 			},

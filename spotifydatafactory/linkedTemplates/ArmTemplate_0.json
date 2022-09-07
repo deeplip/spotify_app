@@ -22,10 +22,6 @@
 		"ADLS_spotify_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://spotify0storage.dfs.core.windows.net/"
-		},
-		"on_config_runs_appear_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/4522d4bf-e71e-4336-86b4-d2c35cdae500/resourceGroups/Spotify/providers/Microsoft.Storage/storageAccounts/spotify0storage"
 		}
 	},
 	"variables": {
@@ -403,37 +399,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Global50')]",
 				"[concat(variables('factoryId'), '/linkedServices/ingest')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/on_config_runs_appear')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pl_ingest",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/params/blobs/",
-					"blobPathEndsWith": ".json",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('on_config_runs_appear_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pl_ingest')]"
 			]
 		}
 	]
