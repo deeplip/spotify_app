@@ -9,28 +9,19 @@
 # MAGIC )
 # MAGIC   USING PARQUET
 # MAGIC     LOCATION 'abfss://users@spotify0storage.dfs.core.windows.net/';
+# MAGIC -- USERNAME UNIQUE
 
 # COMMAND ----------
 
 def insert_user(username, password):
     import hashlib
-    col1, col2 = 'username', 'pwhash'
+    col1, col2 = 'username', 'pwhash' #To remove.
     pwhash = hashlib.sha256(password.encode()).hexdigest()
     spark.sql(f'''
         INSERT INTO users.users_parquet({col1}, {col2}) 
             VALUES("{username}", "{pwhash}");
     ''')
-    return true
-    
-def login(username, password):
-    import hashlib
-    pwhash = hashlib.sha256(password.encode()).hexdigest()
-    users_list = spark.sql(f'''
-        SELECT username FROM users.users_parquet
-            WHERE pwhash == "{pwhash}"
-    '''
-        ).rdd.flatMap(lambda x: x).collect()
-    return username in users_list
+    return True
 
 # COMMAND ----------
 
@@ -39,6 +30,6 @@ def login(username, password):
 
 # COMMAND ----------
 
-username = ''
-password = ''
+username = 'test_login'
+password = 'test_pw_1'
 insert_user(username, password)
