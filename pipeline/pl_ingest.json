@@ -203,7 +203,14 @@
 							"value": "@variables('playlist_id')",
 							"type": "Expression"
 						}
-					}
+					},
+					"libraries": [
+						{
+							"pypi": {
+								"package": "spotipy"
+							}
+						}
+					]
 				},
 				"linkedServiceName": {
 					"referenceName": "ingest",
