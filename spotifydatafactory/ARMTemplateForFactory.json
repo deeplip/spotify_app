@@ -43,7 +43,13 @@
 						"type": "IfCondition",
 						"dependsOn": [
 							{
-								"activity": "get_playlist_exists",
+								"activity": "getPlaylistExists",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "setPlaylistId",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -71,7 +77,10 @@
 									"typeProperties": {
 										"notebookPath": "/Repos/deeplip/spotify_app/first_ingest",
 										"baseParameters": {
-											"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
+											"playlist_id": {
+												"value": "@variables('playlist_id')",
+												"type": "Expression"
+											}
 										},
 										"libraries": [
 											{
@@ -103,7 +112,10 @@
 									"typeProperties": {
 										"notebookPath": "/Repos/deeplip/spotify_app/next_ingests",
 										"baseParameters": {
-											"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
+											"playlist_id": {
+												"value": "@variables('playlist_id')",
+												"type": "Expression"
+											}
 										},
 										"libraries": [
 											{
@@ -142,6 +154,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"notebookPath": "/Repos/deeplip/spotify_app/transform",
+							"baseParameters": {
+								"playlist_id": {
+									"value": "@variables('playlist_id')",
+									"type": "Expression"
+								}
+							},
 							"libraries": [
 								{
 									"pypi": {
@@ -177,7 +195,10 @@
 						"typeProperties": {
 							"notebookPath": "/Repos/deeplip/spotify_app/tables_generator",
 							"baseParameters": {
-								"playlist_id": "37i9dQZEVXbMDoHDwVN2tF"
+								"playlist_id": {
+									"value": "@variables('playlist_id')",
+									"type": "Expression"
+								}
 							},
 							"libraries": [
 								{
@@ -212,7 +233,13 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/deeplip/spotify_app/analyst_transform"
+							"notebookPath": "/Repos/deeplip/spotify_app/analyst_transform",
+							"baseParameters": {
+								"playlist_id": {
+									"value": "@variables('playlist_id')",
+									"type": "Expression"
+								}
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ingest",
@@ -328,7 +355,7 @@
 						}
 					},
 					{
-						"name": "get_playlist_exists",
+						"name": "getPlaylistExists",
 						"type": "SetVariable",
 						"dependsOn": [
 							{
@@ -351,14 +378,6 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
-				},
-				"parameters": {
-					"playlist_id": {
-						"type": "string"
-					},
-					"playlist_name": {
-						"type": "string"
-					}
 				},
 				"variables": {
 					"playlist_id": {
