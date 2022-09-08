@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %run ../spotify_app/spotify_utils
+# MAGIC %run ../spotify_app/get_params
 
 # COMMAND ----------
 
@@ -8,7 +8,7 @@ import pandas as pd
 
 dbutils.widgets.text("playlist_id", "","")
 playlist_id = dbutils.widgets.get("playlist_id")
-# playlist_id = '37i9dQZEVXbMDoHDwVN2tF' # PARAM
+# playlist_id = get_playlist_id()
 
 # From child notebook 'spotify_utils'
 credentials= Credentials().credentials

@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %run ../spotify_app/spotify_utils
+# MAGIC %run ../spotify_app/get_params
 
 # COMMAND ----------
 
@@ -7,7 +7,7 @@ import spotify_modules
 
 dbutils.widgets.text("playlist_id", "","")
 playlist_id = dbutils.widgets.get("playlist_id")
-# playlist_id = '37i9dQZEVXbMDoHDwVN2tF'
+# playlist_id = get_playlist_id()
 
 credentials= Credentials().credentials
 todays_playlist_obj = spotify_modules.Playlist(credentials, playlist_id)
@@ -20,7 +20,7 @@ def get_todays_playlist(playlist_obj):
 
 def get_existing_playlist(path):
     container_name = 'bronze'
-    file_name = 'top_world'
+    file_name = playlist_name
     storage_name = 'spotify0storage'
     return spark.read.format('delta').load(path)
 
