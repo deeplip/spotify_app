@@ -342,45 +342,6 @@
 						"type": "Expression"
 					}
 				}
-			},
-			{
-				"name": "getDanceTracks",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "tables_generator",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "getDanceTracks",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"getFactTable": {
-								"playlist_name": {
-									"value": "@variables('playlist_name')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
-				}
 			}
 		],
 		"variables": {
