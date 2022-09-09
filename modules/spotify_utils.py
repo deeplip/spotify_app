@@ -1,5 +1,5 @@
 # Databricks notebook source
-import spotify_modules
+from modules import spotify_modules
 from spotipy.oauth2 import SpotifyClientCredentials
 
 class Credentials:
@@ -13,3 +13,7 @@ class Routing:
         self.container_name = container_name
         self.file_name = file_name
         self.path = f"abfss://{self.container_name}@{strg_name}.dfs.core.windows.net/{self.file_name}"
+        
+def get_param_widget(widget_name):
+    dbutils.widgets.text(widget_name, "", "")
+    return dbutils.widgets.get(widget_name)

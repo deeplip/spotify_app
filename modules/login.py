@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %run ../spotify_app/spotify_utils
+# MAGIC %run ../modules/spotify_utils
 
 # COMMAND ----------
 

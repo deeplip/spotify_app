@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %run ../spotify_app/login
+# MAGIC %run ../spotify_app/modules/login
 
 # COMMAND ----------
 
@@ -14,15 +14,11 @@ dbutils.widgets.dropdown("playlist", playlists_names[0], playlists_names)
 
 # COMMAND ----------
 
-# MAGIC %run ../spotify_app/pipeline_trigger
+# MAGIC %run ../spotify_app/modules/pipeline_trigger
 
 # COMMAND ----------
 
 main_param
-
-# COMMAND ----------
-
-
 
 # COMMAND ----------
 

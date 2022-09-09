@@ -1,8 +1,9 @@
 # Databricks notebook source
-# MAGIC %run ../spotify_app/spotify_utils
+# MAGIC %run ../spotify_app/modules/spotify_utils
 
 # COMMAND ----------
 
+# Deprecated, replaced by widgets and variables in pipeline
 def get_playlist_id():
     path = Routing('params', 'runs').path
     params_df = spark.read.format('json').load(path)

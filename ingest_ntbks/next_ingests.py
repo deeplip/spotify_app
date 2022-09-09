@@ -1,14 +1,12 @@
 # Databricks notebook source
-# MAGIC %run ../spotify_app/get_params
+# MAGIC %run ../modules/spotify_utils
 
 # COMMAND ----------
 
-import spotify_modules
+# r../modules/spotify_utils |provides ->| Credentials, Routing, get_param_widget
 
-dbutils.widgets.text("playlist_id", "","")
-playlist_id = dbutils.widgets.get("playlist_id")
-# playlist_id = get_playlist_id()
 
+playlist_id = get_param_widget('playlist_id')
 credentials= Credentials().credentials
 todays_playlist_obj = spotify_modules.Playlist(credentials, playlist_id)
 playlist_name = todays_playlist_obj.playlist_name

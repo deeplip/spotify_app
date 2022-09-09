@@ -1,9 +1,7 @@
 # Databricks notebook source
-# MAGIC %run ../spotify_app/get_params
+# MAGIC %run ../modules/spotify_utils
 
 # COMMAND ----------
-
-import spotify_modules
 
 dbutils.widgets.text("playlist_id", "","")
 playlist_id = dbutils.widgets.get("playlist_id")
