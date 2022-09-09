@@ -383,6 +383,10 @@
 								"playlist_id": {
 									"value": "@variables('playlist_id')",
 									"type": "Expression"
+								},
+								"playlist_name": {
+									"value": "@variables('playlist_name')",
+									"type": "Expression"
 								}
 							},
 							"libraries": [
