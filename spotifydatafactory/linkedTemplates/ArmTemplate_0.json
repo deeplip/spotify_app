@@ -220,7 +220,7 @@
 									},
 									"userProperties": [],
 									"typeProperties": {
-										"notebookPath": "/Repos/deeplip/spotify_app/first_ingest",
+										"notebookPath": "/Repos/deeplip/spotify_app/ingest_ntbks/first_ingest",
 										"baseParameters": {
 											"playlist_id": {
 												"value": "@variables('playlist_id')",
@@ -255,7 +255,7 @@
 									},
 									"userProperties": [],
 									"typeProperties": {
-										"notebookPath": "/Repos/deeplip/spotify_app/next_ingests",
+										"notebookPath": "/Repos/deeplip/spotify_app/ingest_ntbks/next_ingests",
 										"baseParameters": {
 											"playlist_id": {
 												"value": "@variables('playlist_id')",
@@ -298,7 +298,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/deeplip/spotify_app/transform",
+							"notebookPath": "/Repos/deeplip/spotify_app/transform_ntbks/transform",
 							"baseParameters": {
 								"playlist_id": {
 									"value": "@variables('playlist_id')",
@@ -338,7 +338,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/deeplip/spotify_app/tables_generator",
+							"notebookPath": "/Repos/deeplip/spotify_app/transform_ntbks/tables_generator",
 							"baseParameters": {
 								"playlist_id": {
 									"value": "@variables('playlist_id')",
@@ -378,7 +378,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/deeplip/spotify_app/analyst_transform",
+							"notebookPath": "/Repos/deeplip/spotify_app/transform_ntbks/analyst_transform",
 							"baseParameters": {
 								"playlist_id": {
 									"value": "@variables('playlist_id')",
