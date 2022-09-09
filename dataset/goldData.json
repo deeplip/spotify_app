@@ -1,0 +1,19 @@
+{
+	"name": "goldData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_spotify",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
