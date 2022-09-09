@@ -21,8 +21,7 @@
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet',",
-				"     wildcardPaths:[(concat('/', $playlist_name))]) ~> getFactTable"
+				"     format: 'parquet') ~> getFactTable"
 			]
 		}
 	}
