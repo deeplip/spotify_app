@@ -1,0 +1,29 @@
+{
+	"name": "getDanceTracks",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "goldData",
+						"type": "DatasetReference"
+					},
+					"name": "getFactTable"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"parameters{",
+				"     playlist_name as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet',",
+				"     wildcardPaths:[(concat('/', $playlist_name))]) ~> getFactTable"
+			]
+		}
+	}
+}

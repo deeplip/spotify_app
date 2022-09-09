@@ -15,10 +15,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": {
-					"value": "@dataset().playlist_name",
-					"type": "Expression"
-				},
 				"fileSystem": "gold"
 			},
 			"compressionCodec": "snappy"
