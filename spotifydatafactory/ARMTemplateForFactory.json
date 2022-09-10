@@ -370,7 +370,7 @@
 						"type": "SetVariable",
 						"dependsOn": [
 							{
-								"activity": "getPlaylistsOnStorage",
+								"activity": "forEachFolderName",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -380,9 +380,63 @@
 						"typeProperties": {
 							"variableName": "playlist_exists",
 							"value": {
-								"value": "@equals(1,\n    length(\n        intersection(\n            array(variables('playlist_name')), \n                array(activity('getPlaylistsOnStorage').output.childItems[0]['name'])\n            )\n    )\n)",
+								"value": "@equals(1,\n    length(\n        intersection(\n            array(variables('playlist_name')), \n                array(variables('on_storage_arr'))\n            )\n    )\n)",
 								"type": "Expression"
 							}
+						}
+					},
+					{
+						"name": "onStorage",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "getPlaylistsOnStorage",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "playlists_folders",
+							"value": {
+								"value": "@activity('getPlaylistsOnStorage').output.childItems\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "forEachFolderName",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "onStorage",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('playlists_folders')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "BronzeFoldersArr",
+									"type": "AppendVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "on_storage_arr",
+										"value": {
+											"value": "@item()['name']",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					}
 				],
@@ -397,17 +451,17 @@
 					"playlist_name": {
 						"type": "String"
 					},
-					"if": {
-						"type": "String"
+					"intersection": {
+						"type": "Array"
 					},
-					"ifa": {
-						"type": "Boolean"
-					},
-					"playlists_folders_ls": {
+					"playlists_folders": {
 						"type": "Array"
 					},
 					"playlist_exists": {
 						"type": "Boolean"
+					},
+					"on_storage_arr": {
+						"type": "Array"
 					}
 				},
 				"annotations": []
